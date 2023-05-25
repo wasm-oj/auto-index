@@ -2,4 +2,4 @@ name: "Auto Index"
 description: "Auto Indexer for WASM-OJ Problem Box"
 runs:
     using: "docker"
-    image: "Dockerfile"
+    image: "ghcr.io/wasm-oj/auto-index"
