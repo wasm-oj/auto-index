@@ -1,5 +1,12 @@
-name: "Auto Index"
-description: "Auto Indexer for WASM-OJ Problem Box"
+name: "WASM OJ Problem Box Manager"
+description: "WASM OJ Problem Box Manager"
+inputs:
+    command:
+        description: "Command to run"
+        required: false
+        default: "index"
 runs:
     using: "docker"
-    image: "ghcr.io/wasm-oj/auto-index"
+    image: "ghcr.io/wasm-oj/box"
+    args:
+        - ${{ inputs.command }}

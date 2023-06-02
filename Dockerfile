@@ -16,6 +16,6 @@ FROM alpine as runtime
 
 WORKDIR /app
 
-COPY --from=builder /app/target/release/auto-index /app/auto-index
+COPY --from=builder /app/target/release/box /app/box
 
-ENTRYPOINT ["/app/auto-index", "problem"]
+ENTRYPOINT ["/app/box"]

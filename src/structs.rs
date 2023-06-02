@@ -39,3 +39,30 @@ pub struct ProblemSummary {
     pub name: String,
     pub tags: Vec<String>,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FastIOJudgeSpec {
+    /// The input string
+    pub input: Option<String>,
+    /// The URL to fetch the input from
+    pub input_url: Option<String>,
+    /// The token used to authenticate the input URL
+    pub input_auth: Option<String>,
+    /// The expected output hash
+    pub output_hash: String,
+    /// The maximum cost of the program
+    pub cost: u64,
+    /// The maximum memory of the program
+    pub memory: u32,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(tag = "judger")]
+pub enum JudgeSpec {
+    IOFast(FastIOJudgeSpec),
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct JudgeSpecs {
+    pub specs: Vec<JudgeSpec>,
+}

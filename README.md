@@ -1,6 +1,11 @@
-# auto-index
+# Box
 
-Auto-Indexer for WOJ Problem Box
+WASM OJ Problem Box Manager.
+
+## Features
+
+- [x] Generate problem index
+- [x] Generate problem specs
 
 ## Usage
 
@@ -26,7 +31,7 @@ jobs:
               uses: actions/checkout@v3
 
             - name: Auto Index
-              uses: wasm-oj/auto-index@main
+              uses: wasm-oj/box@main
 
             - name: Commit
               uses: EndBug/add-and-commit@v9
