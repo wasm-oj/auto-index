@@ -7,6 +7,6 @@ inputs:
         default: "index"
 runs:
     using: "docker"
-    image: "ghcr.io/wasm-oj/box"
+    image: "docker://ghcr.io/wasm-oj/box"
     args:
         - ${{ inputs.command }}
