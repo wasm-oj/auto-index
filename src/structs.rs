@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 
 pub struct GradingPolicy {
     pub budget: u64,
@@ -8,7 +8,7 @@ pub struct GradingPolicy {
     pub score: u64,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 
 pub struct Testcase {
     pub stdin: Option<String>,
@@ -20,7 +20,7 @@ pub struct Testcase {
     pub sample: Option<bool>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 
 pub struct Problem {
     pub name: String,
