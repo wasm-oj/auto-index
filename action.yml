@@ -4,7 +4,7 @@ inputs:
     command:
         description: "Command to run"
         required: false
-        default: "index"
+        default: "pack"
 runs:
     using: "docker"
     image: "docker://ghcr.io/wasm-oj/box"
