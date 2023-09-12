@@ -1,44 +1,41 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-/// Represents a policy with constraints and scores.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Policy {
     /// The budget allocated for executing the solution.
-    pub budget: i32,
+    pub budget: u64,
 
     /// The maximum amount of memory that can be used during execution.
-    pub memory: i32,
+    pub memory: u64,
 
     /// The score assigned to the solution based on its performance.
-    pub score: i32,
+    pub score: i64,
 }
 
-/// Represents a single test case with inputs, outputs, score, etc.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Testcase {
-    /// An object representing the file system mapping for the test case.
-    pub fs: HashMap<String, String>,
+    /// File system layers for the test case.
+    pub fs: HashMap<String, HashMap<String, String>>,
 
     /// The score assigned to this particular test case.
-    pub score: i32,
+    pub score: i64,
 
     /// Indicates if this test case is a sample or not.
-    #[serde(skip_serializing_if = "Option::is_none")]
+    /// Sample test cases are generally provided for illustration.
     pub sample: Option<bool>,
 
     /// A textual description or note related to the test case.
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
 }
 
-/// Represents a programming problem with details, tags, policies, and test cases.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Problem {
     /// The unique identifier for the problem.
     pub id: String,
 
-    /// An array of tags associated with the problem.
+    /// An array of tags associated with the problem,
+    /// generally used for categorization and search.
     pub tags: Vec<String>,
 
     /// The name or title of the problem.
@@ -47,7 +44,8 @@ pub struct Problem {
     /// A detailed textual description of the problem.
     pub description: String,
 
-    /// An array of policies related to the problem.
+    /// An array of policies related to the problem,
+    /// which dictate constraints like memory and budget.
     pub policies: Vec<Policy>,
 
     /// An array of test cases associated with the problem.

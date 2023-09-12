@@ -58,32 +58,28 @@ pub async fn pack(dir: &PathBuf, output: &PathBuf) {
 
         // for all testcases, if the input is not an url, add "txt:" prefix
         for testcase in problem.testcases.iter_mut() {
-            if let Some(_stdin) = testcase.fs.get("_stdin") {
-                if let Err(e) = Url::parse(_stdin) {
-                    if e == ParseError::RelativeUrlWithoutBase {
-                        testcase
-                            .fs
-                            .insert("_stdin".to_owned(), format!("txt:{}", _stdin));
-                    }
-                }
-            }
-
-            if let Some(_stdout) = testcase.fs.get("_stdout") {
-                if let Err(e) = Url::parse(_stdout) {
-                    if e == ParseError::RelativeUrlWithoutBase {
-                        testcase
-                            .fs
-                            .insert("_stdout".to_owned(), format!("txt:{}", _stdout));
-                    }
-                }
-            }
-
-            if let Some(_stderr) = testcase.fs.get("_stderr") {
-                if let Err(e) = Url::parse(_stderr) {
-                    if e == ParseError::RelativeUrlWithoutBase {
-                        testcase
-                            .fs
-                            .insert("_stderr".to_owned(), format!("txt:{}", _stderr));
+            let layers = vec!["prep".to_owned(), "eval".to_owned(), "final".to_owned()];
+            for layer in layers.iter() {
+                if let Some(layer) = testcase.fs.get_mut(layer) {
+                    for (_key, value) in layer.iter_mut() {
+                        let parsed = Url::parse(value);
+                        if let Err(e) = parsed {
+                            if e == ParseError::RelativeUrlWithoutBase {
+                                *value = format!("txt:{}", value);
+                            }
+                        }
+                        if let Ok(parsed) = parsed {
+                            if parsed.scheme() == "rfile" {
+                                let relative_path = parsed.path();
+                                let content = fs::read_to_string(path.join(
+                                    relative_path.strip_prefix('/').unwrap_or(relative_path),
+                                ))
+                                .unwrap_or_else(|_| {
+                                    panic!("Failed to read file {}", relative_path)
+                                });
+                                *value = format!("txt:{}", content);
+                            }
+                        }
                     }
                 }
             }
